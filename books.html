@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles/style.css">
-    <title>Login Page</title>
+    <title>Books</title>
 </head>
 <body>
     <nav>
@@ -13,13 +13,12 @@
         <a href="./books.html">Books</a>
     </nav>
     <main>
-        <h1>Login</h1>
-        <form id="loginForm">
-            <input type="email" id="email" placeholder="Email" required>
-            <input type="password" id="password" placeholder="password" required>
-            <button type="submit">Login</button>
-        </form>
-        <p id="error"></p>
+        <h1>Books Page</h1>
+        <div>
+            <button id="showAvailableBooks">Show Available Books</button>
+            <button id="showBorrowedeBooks">Show Borrowed Books</button>
+        </div>
+        <div id="booksGrid" class="grid"></div>
     </main>
 </body>
 <script></script>
