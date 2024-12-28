@@ -1,15 +1,16 @@
-const baseUrl = "http://localhost:3000/books";
+document.addEventListener("DOMContentLoaded",()=>{
+    const baseUrl = "http://localhost:3000/books";
 
 //check if user is logged in
 const loginData = JSON.parse(localStorage.getItem("loginData"));
 if (!loginData || loginData.email !== "user@empher.com") {
-    alert("Admin not Logged in");
+    alert("User not Logged in");
     window.location.href = "index.html";
 }
 
 //load available books
 
-document.getElementById("showAvaliableBooks").addEventListener("click", async () => {
+document.getElementById("showAvailableBooks").addEventListener("click", async () => {
     try {
         const response = await fetch(`${baseUrl}?isAvailable=true`);
         const books = await response.json();
@@ -26,9 +27,17 @@ document.getElementById("showAvaliableBooks").addEventListener("click", async ()
             <h3>${book.title}</h3>
             <p>Author:${book.author}</p>
             <p>Category:${book.category}</p>
-            <button onClick="borrowBook(${book.id})">Borrow Book</button>`;
+            <button class="borrow-btn" data-id = "${book.id}">Borrow Book</button>`;
             grid.appendChild(card);
 
+        });
+        //attach event listener
+        const borrowButtons = document.querySelectorAll(".borrow-btn");
+        borrowButtons.forEach((button)=>{
+            button.addEventListener("click",(e)=>{
+                const bookId = e.target.getAttribute("data-id");
+                borrowBook(bookId);
+            });
         });
     } catch (error) {
         alert("Failed to load available books.Please try again later.");
@@ -72,12 +81,12 @@ document.getElementById("showBorrowedBooks").addEventListener("click",async()=>{
             card.className = "card";
 
             card.innerHTML = `
-            <img src="${book.imageUrl}" alt="${book.title}">
-            <h3>${book.title}</h3>
-            <p>Author:${book.author}</p>
-            <p>Category:${book.category}</p>
-            <p>Borrowed for:${book.borrowedDays} days</p>
-            <button onClick="returnBook(${book.id})">Return Book</button>`;
+            <img src="${books.imageUrl}" alt="${book.title}">
+            <h3>${books.title}</h3>
+            <p>Author:${books.author}</p>
+            <p>Category:${books.category}</p>
+            <p>Borrowed for:${books.borrowedDays} days</p>
+            <button onClick="returnBook(${books.id})">Return Book</button>`;
             grid.appendChild(card);
 
             
@@ -105,3 +114,5 @@ const returnBook = async (id)=>{
 
     }
 }
+
+});
