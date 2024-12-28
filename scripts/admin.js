@@ -1,4 +1,4 @@
-const baseUrl = "http://localhost:3000/books";
+const baseUrl = "https://beryl-ember-havarti.glitch.me/books";
 
 //check if admin is logged in
 const loginData = JSON.parse(localStorage.getItem("loginData"));

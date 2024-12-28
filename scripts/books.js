@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded",()=>{
-    const baseUrl = "http://localhost:3000/books";
+    const baseUrl = "https://beryl-ember-havarti.glitch.me/books";
 
 //check if user is logged in
 const loginData = JSON.parse(localStorage.getItem("loginData"));
@@ -81,18 +81,27 @@ document.getElementById("showBorrowedBooks").addEventListener("click",async()=>{
             card.className = "card";
 
             card.innerHTML = `
-            <img src="${books.imageUrl}" alt="${book.title}">
+            <img src="${books.imageUrl}" alt="${books.title}">
             <h3>${books.title}</h3>
             <p>Author:${books.author}</p>
             <p>Category:${books.category}</p>
             <p>Borrowed for:${books.borrowedDays} days</p>
-            <button onClick="returnBook(${books.id})">Return Book</button>`;
+            <button  class="return-btn" data-id="${books.id}">Return Book</button>`;
             grid.appendChild(card);
 
             
         });
+         //attach event listener
+         const returnButtons = document.querySelectorAll(".return-btn");
+         returnButtons.forEach((button)=>{
+             button.addEventListener("click",(e)=>{
+                 const bookId = e.target.getAttribute("data-id");
+                 returnBook(bookId);
+             });
+         });
     }catch(error){
         alert("Failed to load borrowed books.Please try again later.");
+        console.log(error)
     }
 });
 
